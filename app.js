@@ -74,22 +74,29 @@ function startGame() {
         playerTotal += drawRandomCard("Player");
         dealerTotal += drawRandomCard("Dealer");
         dealerTotal += drawRandomCard("Dealer");
-        // Update the display
-        if (playerAce == true && playerTotal > 21){
+        // Update the player display
+        // If the player has an Ace and is using it as a 1
+        if (playerAce == true && playerTotal > 21) {
             playerTotalDisplay.textContent = `${playerTotal - 10}`;
         }
+        // If the player has an Ace and can use it as either
         else if (playerAce == true && playerTotal != 21) {
             playerTotalDisplay.textContent = `${playerTotal} OR ${playerTotal - 10}`;
         }
+        // Update normally
         else {
             playerTotalDisplay.textContent = playerTotal;
         }
-        if (dealerAce == true && dealerTotal > 21){
+        // Update the dealer display
+        // If the dealer has an Ace and is using it as a 1
+        if (dealerAce == true && dealerTotal > 21) {
             dealerTotalDisplay.textContent = `${dealerTotal - 10}`;
         }
+        // If the dealer has an Ace and can use it as either
         else if (dealerAce == true && dealerTotal != 21) {
             dealerTotalDisplay.textContent = `${dealerTotal} OR ${dealerTotal - 10}`;
         }
+        // Update normally
         else {
             dealerTotalDisplay.textContent = dealerTotal;
         }
@@ -118,12 +125,13 @@ function drawCard() {
     else {
         // Draw card
         playerTotal += drawRandomCard("Player");
-        // Check if player bust
+        // Check if player bust normally
         if (playerAce == false && playerTotal > 21) {
             dialogueBox.textContent = "Bust!";
             gameActive = false;
             gameOver = true;
         }
+        // Check if player bust even after using Ace as 1
         else if (playerAce == true && playerTotal > 21 && playerTotal - 10 > 21) {
             dialogueBox.textContent = "Bust!";
             gameActive = false;
@@ -131,11 +139,11 @@ function drawCard() {
         }
         // Update display
         if (playerAce == true) {
-            // Show both totals if player has an Ace
+            // Show both totals if player has an Ace and the higher total is 21 or less
             if (playerTotal < 22) {
                 playerTotalDisplay.textContent = `${playerTotal} OR ${playerTotal - 10}`;
             }
-            // Only show one if the higher total is above 21
+            // Show total with Ace as 1 if the higher total is above 21
             else {
                 playerTotalDisplay.textContent = playerTotal;
             }
@@ -154,7 +162,7 @@ function stand() {
     else {
         // gameOver means the game will reset if a new one is started
         gameOver = true;
-        // If the dealer has an Ace, their total went over 21, and the dealer beats them using ace as a 1
+        // If the dealer has an Ace, they are using it as a 1 and still beat the player
         if (dealerAce == true && dealerTotal > 21 && dealerTotal - 10 > playerTotal) {
             dialogueBox.textContent = "You lose!"
         }
@@ -175,11 +183,11 @@ function stand() {
                 }
             }
             // Can the dealer keep playing with his Ace as a 1?
-            if (dealerAce == true && dealerTotal > 21 && dealerTotal - 10 < 21){
+            if (dealerAce == true && dealerTotal > 21 && dealerTotal - 10 < 21) {
                 while (dealerTotal - 10 < 17) {
                     dealerTotal += drawRandomCard("Dealer");
                     // Update display
-                    dealerTotalDisplay.textContent = dealerTotal - 10;
+                    dealerTotalDisplay.textContent = `${dealerTotal - 10}`;
                 }
             }
         }
