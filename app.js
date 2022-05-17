@@ -87,7 +87,7 @@ function startGame() {
         if (dealerAce == true && dealerTotal > 21){
             dealerTotalDisplay.textContent = `${dealerTotal - 10}`;
         }
-        if (dealerAce == true && dealerTotal != 21) {
+        else if (dealerAce == true && dealerTotal != 21) {
             dealerTotalDisplay.textContent = `${dealerTotal} OR ${dealerTotal - 10}`;
         }
         else {
@@ -176,7 +176,7 @@ function stand() {
             }
             // Can the dealer keep playing with his Ace as a 1?
             if (dealerAce == true && dealerTotal > 21 && dealerTotal - 10 < 21){
-                while (dealerTotal - 10 < 18) {
+                while (dealerTotal - 10 < 17) {
                     dealerTotal += drawRandomCard("Dealer");
                     // Update display
                     dealerTotalDisplay.textContent = dealerTotal - 10;
