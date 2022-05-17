@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ABC BlackJack</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
@@ -19,9 +20,28 @@
 
     <button class="action-button" id="reset-button"> Reset Game </button>
 
-
-
     <div>
+        <table id="game-table">
+            <thead>
+                <tr>
+                    <th>Player</th>
+                    <th>Dealer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <h2 id="player-total"> 0 </h2>
+                    </td>
+                    <td>
+                        <h2 id="dealer-total"> 0 </h2>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+<!--     <div>
         <ul id="game-table"> </ul>
         <div>
             <h2 id="player-total"> 0 </h2>
@@ -30,7 +50,7 @@
             <h2 id="dealer-total"> 0 </h2>
         </div>
     </div>
-
+ -->
 
 </body>
 <script src="./app.js"></script>
