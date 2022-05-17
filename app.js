@@ -11,6 +11,8 @@ const dialogueBox = document.getElementById("dialogue-box");
 
 // Is a game in progress?
 let gameActive = false;
+// Did the game end normally?
+let gameOver = false;
 // Player totals
 let playerTotal = 0;
 let dealerTotal = 0;
@@ -47,6 +49,10 @@ function drawRandomCard() {
 }
 
 function startGame() {
+    // If last game finished and new game is pressed, reset first
+    if (gameOver == true) {
+        resetGame();
+    }
     // Making sure start cannot be pressed if game is already going
     if (gameActive == false) {
         // Game is active
@@ -56,6 +62,8 @@ function startGame() {
         playerTotal += drawRandomCard();
         dealerTotal += drawRandomCard();
         dealerTotal += drawRandomCard();
+        playerTotalDisplay.textContent = playerTotal;
+        dealerTotalDisplay.textContent = dealerTotal;
         // Has anyone got blackjack?
         if (playerTotal == 21 && dealerTotal == 21) {
             dialogueBox.textContent = "Draw!";
@@ -80,7 +88,9 @@ function drawCard() {
         if (playerTotal > 21) {
             dialogueBox.textContent = "Bust!";
             gameActive = false;
+            gameOver = true;
         }
+        playerTotalDisplay.textContent = playerTotal;
     }
 }
 
@@ -89,20 +99,27 @@ function stand() {
         dialogueBox.textContent = "Please start a new game"
     }
     else {
-        while (dealerTotal < 17) {
-            setTimeout(dealerTotal += drawRandomCard(), 2000);
-        }
-        if (dealerTotal > 21) {
-            dialogueBox.textContent = "Dealer bust! You win!";
-        }
-        else if (dealerTotal > playerTotal) {
+        gameOver = true;
+        if(dealerTotal > playerTotal) {
             dialogueBox.textContent = "You lose!"
         }
-        else if (dealerTotal == playerTotal) {
-            dialogueBox.textContent = "Draw!"
-        }
         else {
-            dialogueBox.textContent = "You win!"
+            while (dealerTotal < 17) {
+                setTimeout(dealerTotal += drawRandomCard(), 2000);
+                dealerTotalDisplay.textContent = dealerTotal;
+            }
+            if (dealerTotal > 21) {
+                dialogueBox.textContent = "Dealer bust! You win!";
+            }
+            else if (dealerTotal > playerTotal) {
+                dialogueBox.textContent = "You lose!"
+            }
+            else if (dealerTotal == playerTotal) {
+                dialogueBox.textContent = "Draw!"
+            }
+            else {
+                dialogueBox.textContent = "You win!"
+            }
         }
         gameActive = false;
     }
@@ -110,8 +127,11 @@ function stand() {
 
 function resetGame() {
     gameActive = false;
+    gameOver = false;
     playerTotal = 0;
     dealerTotal = 0;
+    playerTotalDisplay.textContent = playerTotal;
+    dealerTotalDisplay.textContent = dealerTotal;
     dialogueBox.textContent = "Welcome";
     deckOfCards = [...cards, ...cards, ...cards, ...cards];
     while (gameTable.firstChild) {
